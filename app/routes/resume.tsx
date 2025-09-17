@@ -14,6 +14,11 @@ export const meta = () => (
 )
 
 
+export const normalizeScore = (score: number, scale: number = 10): number => {
+  return Math.round((score / scale) * 100);
+};
+
+
 const Resume = () => {
     const {isLoading, auth, fs, kv} = usePuterStore();
     const { id } = useParams();
@@ -85,7 +90,11 @@ loadResume();
 {feedback ? (
      <div className="flex flex-col gap-8 animate-in fade-in duration-1000 ">
 <Summary feedback = {feedback}/>
-{/* <Ats score={feedback.Ats.score || 0} suggestions={feedback.Ats.tips || []}/> */}
+<Ats
+  score={normalizeScore(feedback?.ATS?.score)}
+  suggestions={feedback?.ATS?.tips ?? []}
+/>
+
 <Details feedback={feedback}/>
 
      </div>
